@@ -46,7 +46,7 @@ namespace SpaceStation.Core
             IPlanet planet = new Planet(planetName);
             foreach (var item in items)
             {
-                planet.Items.Add(item);
+                planet.AddItem(item);
             }
 
             planetRepository.Add(planet);
@@ -55,7 +55,7 @@ namespace SpaceStation.Core
 
         public string ExplorePlanet(string planetName)
         {
-            var astronautsOnMission = astronautRepository.Models.Where(x=>x.CanBreath).ToList();
+            var astronautsOnMission = astronautRepository.Models.Where(x=>x.Oxygen>60).ToList();
             if(!astronautsOnMission.Any())
             {
                 throw new InvalidOperationException(ExceptionMessages.InvalidAstronautCount);

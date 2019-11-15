@@ -18,10 +18,10 @@ namespace SpaceStation.Models.Astronauts
         }
         public string Name 
         {
-             get=>this.Name;
+             get=>this.name;
              set
              {
-                 if(string.IsNullOrEmpty(value))
+                 if(string.IsNullOrWhiteSpace(value))
                  {
                      throw new ArgumentNullException(ExceptionMessages.InvalidAstronautName);
                  }
@@ -42,11 +42,12 @@ namespace SpaceStation.Models.Astronauts
         }
 
         public bool CanBreath =>this.Oxygen>0;
+
         public IBag Bag { get; }
 
         public virtual void Breath()
         {
-            this.Oxygen = this.Oxygen-10<0?0:this.Oxygen-10;
+            this.Oxygen = this.Oxygen - 10 < 0 ? 0 : this.Oxygen - 10;
         }
-    }
+    } 
 }

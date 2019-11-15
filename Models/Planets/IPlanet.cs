@@ -1,12 +1,15 @@
 ﻿namespace SpaceStation.Models.Planets
 {
     using System.Collections.Generic;
-    using Repositories;
+    using Repositories.Contracts;
 
     public interface IPlanet
     {
         ICollection<string> Items { get; }
 
         string Name { get; }
+        void AddItem(string itemName);
+        string RemoveItem();
+
     }
 }
