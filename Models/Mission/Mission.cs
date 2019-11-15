@@ -14,9 +14,9 @@ namespace SpaceStation.Models.Mission
                while(planet.Items.Count>0&&currentAstronaut.CanBreath)
                {
                    var item = planet.Items.ElementAt(0);
-                   currentAstronaut.Bag.AddItem(planet.RemoveItem());
-                 
-                   currentAstronaut.Breath();
+                    currentAstronaut.Bag.Items.Add(item);
+                    planet.Items.Remove(item);
+                    currentAstronaut.Breath();
                }
 
                if(planet.Items.Count==0)

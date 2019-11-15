@@ -10,7 +10,11 @@ namespace SpaceStation.Models.Bags
         {
             items = new  List<string>();
         }
-        public ICollection<string> Items { get => items.AsReadOnly();}
-        public void AddItem(string item) =>items.Add(item);
+        public ICollection<string> Items { get => items; }
+
+        public override string ToString()
+        {
+            return "Bag items: " + (items.Count == 0 ? "none" : string.Join(", ", items));
+        }
     }
 }

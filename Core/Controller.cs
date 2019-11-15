@@ -46,7 +46,7 @@ namespace SpaceStation.Core
             IPlanet planet = new Planet(planetName);
             foreach (var item in items)
             {
-                planet.AddItem(item);
+                planet.Items.Add(item);
             }
 
             planetRepository.Add(planet);
@@ -76,9 +76,7 @@ namespace SpaceStation.Core
             report.AppendLine("Astronauts info:");
             foreach (var astronaut in this.astronautRepository.Models)
             {
-                report.AppendLine($"Name: {astronaut.Name}");
-                report.AppendLine($"Oxygen: {astronaut.Oxygen}");
-                report.AppendLine("Bag items: "+(astronaut.Bag.Items.Count==0?"none":string.Join(", ",astronaut.Bag.Items)));
+                report.AppendLine(astronaut.ToString());
             }
             return report.ToString().TrimEnd();
         }

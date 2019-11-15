@@ -8,8 +8,5 @@
         ICollection<string> Items { get; }
 
         string Name { get; }
-        void AddItem(string itemName);
-        string RemoveItem();
-
     }
 }

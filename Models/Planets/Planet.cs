@@ -13,7 +13,7 @@ namespace SpaceStation.Models.Planets
             this.Name = name;
             this.items = new List<string>();
         }
-        public ICollection<string> Items {get=>items.AsReadOnly();}
+        public ICollection<string> Items {get=>items;}
 
         public string Name 
         {
@@ -26,18 +26,6 @@ namespace SpaceStation.Models.Planets
                 }
                 this.name = value;
             }
-        }
-
-        public void AddItem(string itemName)
-        {
-            items.Add(itemName);
-        }
-
-        public string RemoveItem()
-        {
-            var result = items[0];
-            items.RemoveAt(0);
-            return result;
         }
     }
 }
