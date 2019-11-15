@@ -1,38 +1,47 @@
-﻿using SpaceStation.Models.Planets;
-using SpaceStation.Repositories.Contracts;
+using SpaceStation.Models.Planets;
 using System.Collections.Generic;
-using System.Linq;
+using SpaceStation.Repositories.Contracts;
 
 namespace SpaceStation.Repositories
 {
-    class PlanetRepository : IRepository<IPlanet>
+    public class PlanetRepository:IRepository<IPlanet>
     {
-        private List<IPlanet> models;
+
+        private List<IPlanet> planetRepository;
         public PlanetRepository()
         {
-            models = new List<IPlanet>();
+            planetRepository = new List<IPlanet>();
         }
-        public IReadOnlyCollection<IPlanet> Models => models.AsReadOnly();
+        public IReadOnlyCollection<IPlanet> Models => planetRepository;
 
-        public void Add(IPlanet model)
+        public void Add(IPlanet planet)
         {
-            models.Add(model);
+            planetRepository.Add(planet);
         }
 
         public IPlanet FindByName(string name)
         {
-            return models.Find(x => x.Name == name);
+            IPlanet planet = null;
+            foreach (var model in Models)
+            {
+                if(name == model.Name)
+                {
+                    planet = model;
+                }
+            }
+
+            return planet;
         }
 
-        public bool Remove(IPlanet model)
+        public bool Remove(IPlanet planet)
         {
-            var planetToRemove  = models.FirstOrDefault(x=>x.Name == model.Name);
-           if(model !=null)
-           {
-               models.Remove(planetToRemove);
-               return true;
-           }
-           return false;
+            var target = this.FindByName(planet.Name);
+            if(target==null)
+            {
+                return false;
+            }
+            this.planetRepository.Remove(target);
+            return true;
         }
     }
 }

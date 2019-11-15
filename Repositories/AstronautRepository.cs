@@ -1,39 +1,47 @@
-﻿using System.Linq;
+using System.Collections.Generic;
 using SpaceStation.Models.Astronauts.Contracts;
 using SpaceStation.Repositories.Contracts;
-using System.Collections.Generic;
 
 namespace SpaceStation.Repositories
 {
-    class AstronautRepository : IRepository<IAstronaut>
+    public class AstronautRepository : IRepository<IAstronaut>
     {
-
-        private List<IAstronaut> models;
+        private List<IAstronaut> astronautRepository;
         public AstronautRepository()
         {
-            models = new List<IAstronaut>();
+            astronautRepository = new List<IAstronaut>();
         }
-        public IReadOnlyCollection<IAstronaut> Models { get => this.models.AsReadOnly(); }
+        public IReadOnlyCollection<IAstronaut> Models => astronautRepository;
 
-        public void Add(IAstronaut model)
+        public void Add(IAstronaut astronaut)
         {
-            this.models.Add(model);
-        }
-
-        public IAstronaut FindByName(string name)
-        {
-            return models.FirstOrDefault(x => x.Name == name);
+            astronautRepository.Add(astronaut);
         }
 
-        public bool Remove(IAstronaut model)
+        public IAstronaut FindByName(string astronautName)
         {
-           var astronautToRemove  = models.FirstOrDefault(x=>x.Name == model.Name);
-           if(model !=null)
+            IAstronaut astronaut = null;
+            foreach (var model in Models)
+            {
+                if(astronautName == model.Name)
+                {
+                    astronaut = model;
+                }
+            }
+
+            return astronaut;
+        }
+
+        public bool Remove(IAstronaut astronaut)
+        {
+           var target = this.FindByName(astronaut.Name);
+           if(target==null)
            {
-               models.Remove(astronautToRemove);
-               return true;
+               return false;
            }
-           return false;
+           this.astronautRepository.Remove(target);
+           return true;
         }
     }
 }
+

@@ -1,32 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using SpaceStation.Utilities.Messages;
-using System.Text;
+using System.Collections.Generic;
 
 namespace SpaceStation.Models.Planets
 {
-    class Planet : IPlanet
+    public class Planet : IPlanet
     {
         private string name;
+
         public Planet(string name)
         {
             this.Name = name;
             this.Items = new List<string>();
         }
-        public ICollection<string> Items { get;}
+        public ICollection<string> Items {get;}
 
-        public string Name
+        public string Name 
         {
-            get=>name;
+            get => this.name;
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                if(string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentNullException(ExceptionMessages.InvalidPlanetName);
+                    throw  new ArgumentNullException(ExceptionMessages.InvalidPlanetName);
                 }
-                name = value;
+                this.name = value;
             }
         }
-
     }
 }

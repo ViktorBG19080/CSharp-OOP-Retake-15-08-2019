@@ -1,28 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using SpaceStation.Models.Astronauts.Contracts;
 using SpaceStation.Models.Planets;
+using System.Collections.Generic;
+using SpaceStation.Models.Astronauts.Contracts;
 
 namespace SpaceStation.Models.Mission
 {
-    class Mission : IMission
+    public class Mission : IMission
     {
         public void Explore(IPlanet planet, ICollection<IAstronaut> astronauts)
         {
-            foreach (var astronaut in astronauts)
-            {
-                while (astronaut.CanBreath&&planet.Items.Count>0)
-                {
-                    var item = planet.Items.ToList()[0];
-                    astronaut.Bag.Items.Add(item);
-                    planet.Items.Remove(item);
-                    astronaut.Breath();
-                }
+           foreach (var currentAstronaut in astronauts)
+           {
+               while(planet.Items.Count>0&&currentAstronaut.CanBreath)
+               {
+                   var item = planet.Items.ElementAt(0);
+                   currentAstronaut.Bag.Items.Add(item);
+                   planet.Items.Remove(item);
+                   currentAstronaut.Breath();
+               }
 
-                if (planet.Items.Count == 0)
-                    return;
-            }
+               if(planet.Items.Count==0)
+               {
+                   break;
+               }
+           }
         }
     }
 }

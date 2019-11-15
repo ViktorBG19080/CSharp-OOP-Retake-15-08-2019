@@ -16,7 +16,6 @@ namespace SpaceStation.Core
             this.writer = new Writer();
             this.reader = new Reader();
             this.controller = new Controller();
-            
         }
         public void Run()
         {
@@ -31,7 +30,7 @@ namespace SpaceStation.Core
                 {
                     if (input[0] == "AddAstronaut")
                     {
-                        writer.WriteLine(controller.AddAstronaut(input[1], input[2]));
+                        writer.WriteLine(controller.AddAstronaut(input[1],input[2]));
                     }
                     else if (input[0] == "AddPlanet")
                     {

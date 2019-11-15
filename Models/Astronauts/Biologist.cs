@@ -1,26 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SpaceStation.Models.Astronauts
 {
-    class Biologist:Astronaut
+    public class Biologist:Astronaut
     {
-        public Biologist(string name) : base(name, 70)
+        private const double initialOxygen = 70;
+        private const double oxygenDecrement = 5;
+        public Biologist(string name):base(name,initialOxygen)
         {
-
+            
         }
-        
         public override void Breath()
         {
-            if (this.Oxygen - 5 < 0)
-            {
-                this.Oxygen = 0;
-            }
-            else
-            {
-                this.Oxygen -= 5;
-            }
+            this.Oxygen = this.Oxygen-oxygenDecrement<0?0:this.Oxygen-oxygenDecrement;
         }
     }
 }

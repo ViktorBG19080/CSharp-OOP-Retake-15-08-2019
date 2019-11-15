@@ -1,39 +1,44 @@
-﻿using System;
+using System.Linq;
+using System.Text;
+using System;
 using SpaceStation.Core.Contracts;
-using SpaceStation.Models.Astronauts.Contracts;
 using SpaceStation.Models.Astronauts;
-using SpaceStation.Models.Mission;
+using SpaceStation.Models.Astronauts.Contracts;
 using SpaceStation.Models.Planets;
+using SpaceStation.Models.Mission;
 using SpaceStation.Repositories;
 using SpaceStation.Utilities.Messages;
-using System.Text;
-using System.Linq;
 
 namespace SpaceStation.Core
 {
-    class Controller : IController
+    public class Controller : IController
     {
-        private AstronautRepository astronautReopsitory;
-        private PlanetRepository planetsRepository;
+        private AstronautRepository astronautRepository;
+        private PlanetRepository planetRepository;
+        private IMission mission;
         private int exploredPlanetsCount;
+
         public Controller()
         {
-            astronautReopsitory = new AstronautRepository();
-            planetsRepository = new PlanetRepository();
+            this.astronautRepository = new AstronautRepository();
+            this.planetRepository = new PlanetRepository();
+            this.mission = new Mission();
         }
+
         public string AddAstronaut(string type, string astronautName)
         {
             IAstronaut astronaut = null;
-            switch (type)
+            switch(type)
             {
-                case "Biologist":  astronaut = new Biologist(astronautName);break;
-                case "Geodesist":astronaut = new Geodesist(astronautName);break;
+                case "Biologist": astronaut = new Biologist(astronautName);break;
+                case "Geodesist": astronaut = new Geodesist(astronautName);break;
                 case "Meteorologist":astronaut = new Meteorologist(astronautName);break;
                 default:
-                    throw new InvalidOperationException(ExceptionMessages.InvalidAstronautType);
+                throw new InvalidOperationException(ExceptionMessages.InvalidAstronautType);
             }
-            astronautReopsitory.Add(astronaut);
-            return string.Format(OutputMessages.AstronautAdded, type, astronautName);
+
+            astronautRepository.Add(astronaut);
+            return string.Format(OutputMessages.AstronautAdded,type,astronautName);
         }
 
         public string AddPlanet(string planetName, params string[] items)
@@ -43,47 +48,50 @@ namespace SpaceStation.Core
             {
                 planet.Items.Add(item);
             }
-            
-            planetsRepository.Add(planet);
+
+            planetRepository.Add(planet);
             return string.Format(OutputMessages.PlanetAdded,planetName);
         }
 
         public string ExplorePlanet(string planetName)
         {
-            var planet = planetsRepository.FindByName(planetName);
-            var astronautsOnMission = astronautReopsitory.Models.Where(x => x.Oxygen > 60).ToArray();
-            if (!astronautsOnMission.Any())
+            var astronautsOnMission = astronautRepository.Models.Where(x=>x.CanBreath).ToList();
+            if(!astronautsOnMission.Any())
             {
                 throw new InvalidOperationException(ExceptionMessages.InvalidAstronautCount);
             }
 
-            var mission = new Mission();
-            mission.Explore(planet, astronautsOnMission);
-            var deadAstronauts = astronautsOnMission.Count(x => !x.CanBreath);
-            exploredPlanetsCount++;
+            IPlanet planet = planetRepository.FindByName(planetName);
+            this.mission.Explore(planet,astronautsOnMission);
+            int deadAstronauts = astronautsOnMission.Count(x=>!x.CanBreath);
+            this.exploredPlanetsCount++;
+
             return string.Format(OutputMessages.PlanetExplored,planetName,deadAstronauts);
         }
 
         public string Report()
         {
-            var sb = new StringBuilder();
-            sb.AppendLine($"{exploredPlanetsCount} planets were explored!");
-            sb.AppendLine("Astronauts info:");
-            foreach (var item in astronautReopsitory.Models)
+            var report = new StringBuilder();
+            report.AppendLine($"{exploredPlanetsCount} planets were explored!");
+            report.AppendLine("Astronauts info:");
+            foreach (var astronaut in this.astronautRepository.Models)
             {
-                sb.AppendLine(item.ToString());
+                report.AppendLine($"Name: {astronaut.Name}");
+                report.AppendLine($"Oxygen: {astronaut.Oxygen}");
+                report.AppendLine("Bag items: "+(astronaut.Bag.Items.Count==0?"none":string.Join(", ",astronaut.Bag.Items)));
             }
-            return sb.ToString().TrimEnd();
+            return report.ToString().TrimEnd();
         }
 
         public string RetireAstronaut(string astronautName)
         {
-            var astronaut = astronautReopsitory.FindByName(astronautName);
-            if (astronaut == null)
+            IAstronaut astronaut = astronautRepository.FindByName(astronautName);
+            if(astronaut==null)
             {
-                throw new InvalidOperationException(ExceptionMessages.InvalidRetiredAstronaut);
+                throw  new InvalidOperationException(string.Format(ExceptionMessages.InvalidRetiredAstronaut,astronautName));
             }
-            astronautReopsitory.Remove(astronaut);
+            
+            this.astronautRepository.Remove(astronaut);
             return string.Format(OutputMessages.AstronautRetired,astronautName);
         }
     }
