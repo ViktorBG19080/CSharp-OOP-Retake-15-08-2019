@@ -7,17 +7,17 @@ using SpaceStation.Models.Astronauts.Contracts;
 using SpaceStation.Models.Planets;
 using SpaceStation.Models.Mission;
 using SpaceStation.Repositories;
+using SpaceStation.Repositories.Contracts;
 using SpaceStation.Utilities.Messages;
 
 namespace SpaceStation.Core
 {
     public class Controller : IController
     {
-        private AstronautRepository astronautRepository;
-        private PlanetRepository planetRepository;
+        private  IRepository<IAstronaut> astronautRepository;
+        private IRepository<IPlanet> planetRepository;
         private IMission mission;
         private int exploredPlanetsCount;
-
         public Controller()
         {
             this.astronautRepository = new AstronautRepository();
@@ -34,7 +34,7 @@ namespace SpaceStation.Core
                 case "Geodesist": astronaut = new Geodesist(astronautName);break;
                 case "Meteorologist":astronaut = new Meteorologist(astronautName);break;
                 default:
-                throw new InvalidOperationException(ExceptionMessages.InvalidAstronautType);
+                    throw new InvalidOperationException(ExceptionMessages.InvalidAstronautType);
             }
 
             astronautRepository.Add(astronaut);
@@ -78,6 +78,7 @@ namespace SpaceStation.Core
             {
                 report.AppendLine(astronaut.ToString());
             }
+
             return report.ToString().TrimEnd();
         }
 

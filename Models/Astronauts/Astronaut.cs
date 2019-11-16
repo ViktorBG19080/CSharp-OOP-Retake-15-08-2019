@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SpaceStation.Models.Astronauts
 {
-    public  class Astronaut:IAstronaut
+    public abstract  class Astronaut:IAstronaut
     {
         private string name;
         private double oxygen;
@@ -21,7 +21,7 @@ namespace SpaceStation.Models.Astronauts
         public string Name 
         {
              get=>this.name;
-             set
+             private set
              {
                  if(string.IsNullOrWhiteSpace(value))
                  {
@@ -34,7 +34,7 @@ namespace SpaceStation.Models.Astronauts
         public double Oxygen 
         { 
             get =>this.oxygen;
-            set
+            protected set
             {
                 if(value<0)
                 {

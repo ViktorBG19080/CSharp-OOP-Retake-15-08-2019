@@ -7,6 +7,7 @@ namespace SpaceStation.Repositories
     public class AstronautRepository : IRepository<IAstronaut>
     {
         private List<IAstronaut> astronautRepository;
+        
         public AstronautRepository()
         {
             astronautRepository = new List<IAstronaut>();

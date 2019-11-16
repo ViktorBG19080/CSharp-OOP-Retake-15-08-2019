@@ -1,0 +1,11 @@
+/home/viktor/Свалени/Submission_13228627/C-OOP-Retake-15-08-2019/obj/Debug/netcoreapp2.1/SpaceStation.csprojAssemblyReference.cache
+/home/viktor/Свалени/Submission_13228627/C-OOP-Retake-15-08-2019/obj/Debug/netcoreapp2.1/SpaceStation.csproj.CoreCompileInputs.cache
+/home/viktor/Свалени/Submission_13228627/C-OOP-Retake-15-08-2019/obj/Debug/netcoreapp2.1/SpaceStation.AssemblyInfoInputs.cache
+/home/viktor/Свалени/Submission_13228627/C-OOP-Retake-15-08-2019/obj/Debug/netcoreapp2.1/SpaceStation.AssemblyInfo.cs
+/home/viktor/Свалени/Submission_13228627/C-OOP-Retake-15-08-2019/bin/Debug/netcoreapp2.1/SpaceStation.deps.json
+/home/viktor/Свалени/Submission_13228627/C-OOP-Retake-15-08-2019/bin/Debug/netcoreapp2.1/SpaceStation.runtimeconfig.json
+/home/viktor/Свалени/Submission_13228627/C-OOP-Retake-15-08-2019/bin/Debug/netcoreapp2.1/SpaceStation.runtimeconfig.dev.json
+/home/viktor/Свалени/Submission_13228627/C-OOP-Retake-15-08-2019/bin/Debug/netcoreapp2.1/SpaceStation.dll
+/home/viktor/Свалени/Submission_13228627/C-OOP-Retake-15-08-2019/bin/Debug/netcoreapp2.1/SpaceStation.pdb
+/home/viktor/Свалени/Submission_13228627/C-OOP-Retake-15-08-2019/obj/Debug/netcoreapp2.1/SpaceStation.dll
+/home/viktor/Свалени/Submission_13228627/C-OOP-Retake-15-08-2019/obj/Debug/netcoreapp2.1/SpaceStation.pdb
